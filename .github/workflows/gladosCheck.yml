@@ -8,9 +8,7 @@ on:
       - 'README.md'
       - 'imgs/**'
   schedule:
-    - cron: '18 9,12 * * *'
-      timezone: 'Asia/Shanghai'
-
+    - cron: '18 1,4 * * *'
 jobs:
   build:
     name: glados/railgun checkin
