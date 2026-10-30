@@ -13,7 +13,7 @@ from urllib.parse import urlencode, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 
-ALLOWED_HOSTS = {"glados.cloud", "glados.rocks", "railgun.info"}
+ALLOWED_HOSTS = {"glados.cloud", "glados.rocks", "railgun.info", "glados-facility.com"}
 DEFAULT_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -49,7 +49,7 @@ def read_config():
         or url.query
         or url.fragment
     ):
-        raise CheckinError("GLADOS_BASE_URL 必须是 https://glados.cloud、https://glados.rocks 或 https://railgun.info。")
+        raise CheckinError("GLADOS_BASE_URL 必须是支持的 GLaDOS HTTPS 域名（含 glados-facility.com）。")
     ua = (os.getenv("GLADOS_USER_AGENT") or DEFAULT_UA).strip()
     if not ua or "\r" in ua or "\n" in ua:
         raise CheckinError("GLADOS_USER_AGENT 必须是一行浏览器 User-Agent。")
