@@ -1,5 +1,8 @@
 # Glados自动签到
 
+> **当前部署说明：** 本仓库现有 GitHub Actions 工作流运行 `main.py`，支持两个账号独立签到。账号 1 保留原有 Secret，账号 2 使用 `GLADOS_COOKIE_2`。请按 [双账号部署指南](MULTI_ACCOUNT.md) 配置和验收；下方原始说明中的 `&` 拼接 Cookie、自动兑换和推送配置不适用于当前工作流。
+
+
 ## 食用方式：
 
 ### 注册一个GLaDOS的账号([注册地址](https://glados.space/landing/0A58E-NV28S-6U3QV-33VMG))
