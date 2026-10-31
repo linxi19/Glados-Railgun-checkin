@@ -15,8 +15,25 @@ concurrency:
 
 jobs:
   checkin:
+    name: Account ${{ matrix.account }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - account: 1
+            cookie_secret: GLADOS_COOKIE
+            legacy_cookie_secret: GLADOS_COOKIES
+            base_url_variable: GLADOS_BASE_URL
+            default_base_url: https://glados.cloud
+            user_agent_variable: GLADOS_USER_AGENT
+          - account: 2
+            cookie_secret: GLADOS_COOKIE_2
+            legacy_cookie_secret: GLADOS_COOKIE_2
+            base_url_variable: GLADOS_BASE_URL_2
+            default_base_url: https://glados-facility.com
+            user_agent_variable: GLADOS_USER_AGENT_2
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -28,10 +45,10 @@ jobs:
           python-version: '3.12'
       - name: Check in and verify
         env:
-          GLADOS_COOKIE: ${{ secrets.GLADOS_COOKIE }}
-          GLADOS_COOKIES: ${{ secrets.GLADOS_COOKIES }}
-          GLADOS_BASE_URL: ${{ vars.GLADOS_BASE_URL }}
-          GLADOS_USER_AGENT: ${{ vars.GLADOS_USER_AGENT }}
+          GLADOS_COOKIE: ${{ secrets[matrix.cookie_secret] }}
+          GLADOS_COOKIES: ${{ secrets[matrix.legacy_cookie_secret] }}
+          GLADOS_BASE_URL: ${{ vars[matrix.base_url_variable] || matrix.default_base_url }}
+          GLADOS_USER_AGENT: ${{ vars[matrix.user_agent_variable] }}
           PYTHONUNBUFFERED: '1'
           PYTHONUTF8: '1'
         run: python main.py
